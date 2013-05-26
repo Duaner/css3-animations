@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Découvrez les bases et les secrets des animations CSS3.">
+
+	<title>CSS3 animations</title>
+	
+	<link rel="stylesheet" href="assets/css/css-quick-starter.css">
+	<link rel="stylesheet" href="assets/css/monokai.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	
+	<link href="http://fonts.googleapis.com/css?family=Strait|Open+Sans:300,400,600,700" rel="stylesheet">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script type="text/javascript" src="https://raw.github.com/scottjehl/Respond/master/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+	<header id="header" class="container">
+		<h1>Animations CSS3</h1>
+		<p>Découvrez les bases et les secrets des animations CSS3.</p>
+	</header>
+
+	<section class="container">
+		<h2 class="title">Les animations, qu'est-ce que c'est ?</h2>
+
+		<p>Les animations apparues avec CSS3, permettent de mettre en mouvement, ou de changer l'état initial d'un élément de la page. Les animations ont un grand rayon d'action, et permettent de changer beaucoup de propriétés CSS. Le grand absent, est très certainement la propriété <span class="minicode">display: block;</span> qui n'est pas animable. On doit pour le moment passer par une sorte de "hack" pour la réaliser, en ajoutant un <span class="minicode">height: 0; opacity: 0; overflow: hidden</span>.</p>
+
+		<h2 class="title">Comment les créer ?</h2>
+
+		<h3 class="sub-title">Création des « images-clés »</h3>	
+		<p>Cela se passe en deux étapes. En premier on créée une keyframe qui correspond aux images-clés de l'animation, c'est à dire les changements de propriétés/valeurs suivant le temps.</p>
+
+		<p>Toutes les propriétés CSS3 (ou presque) sont animables. Changement de couleurs, de fond, de taille de texte, de largeur d'un bloc, de hauteur. Comme je le disais tout, ou preque, puisque ce qui parait le plus utile et le plus important n'est pas encore animable, c'est la propriété display. Pour émuler ce comportement on est obligé de passer par un height: 0, opacity: 0; overflow: hidden.</p>
+
+		<p>Ci-dessous les « images-clés » pour l'animation de la bille :</p>
+
+		<div>
+			<pre class="r-4"><code class="language-css">@-webkit-keyframes animBille {
+	100% { -webkit-transform: translateX(400px); }
+}
+@-moz-keyframes animBille {
+	100% { -moz-transform: translateX(400px); }
+}
+@-o-keyframes animBille {
+	100% { -o-transform: translateX(400px); }
+}
+@keyframes animBille {
+	100% { transform: translateX(400px); }
+}
+</code></pre>
+		</div>
+
+		<h2 class="title">Les options de l'animation</h2>
+
+		<div class="content">
+			<div class="bille animBille"></div>
+		</div>
+
+		<div class="code-output">
+			<pre class="r-4"><code></code></pre>
+		</div>
+
+		<h2 class="title">Choississez vos options</h2>
+
+		<form>
+			<div id="duration" class="thumb-min g-first b-s r-4 active-parameter">
+				<h3>Duration</h3>
+				<p>Durée de l'animation</p>
+				<!--<span class="close">✖</span>-->
+
+				<span class="duration-val"></span>
+				<input id="durationInput" value="" type="range" step="0.1" min="0" max="10">
+			</div>
+
+			<div id="timing" class="thumb-max b-s g-last r-4 active-parameter">
+				<h3>Timing function</h3>
+				<p>Courbe de vitesse décrite par l'animation suivant le temps</p>
+				<span class="close">✖</span>
+
+				<div class="inputs">
+					<label class="radio" for="ease">
+						<input name="timing" value="ease" id="ease" type="radio">
+						Ease
+					</label>
+
+					<label class="radio" for="linear">
+						<input name="timing" value="linear" id="linear" type="radio">
+						Linear
+					</label>
+
+					<label class="radio" for="easein">
+						<input name="timing" value="ease-in" id="easein" type="radio">
+						Ease-in
+					</label>
+
+					<label class="radio" for="easeout">
+						<input name="timing" value="ease-out" id="easeout" type="radio">
+						Ease-out
+					</label>
+
+					<label class="radio" for="easeinout">
+						<input name="timing" value="ease-in-out" id="easeinout" type="radio">
+						Ease-in-out
+					</label>
+
+					<label class="radio" for="cubicbezier">
+						<input name="timing" value="cubic-bezier" id="cubicbezier" type="radio">
+						Cubic-bezier
+					</label>
+				</div>
+			</div>
+
+			<div id="delay" class="thumb-min b-s g-first r-4">
+				<h3>Delay</h3>
+				<p>Ajout d'un délai pour le début de l'animation <!--<span class="defaut r-2">Désactivé par défaut</span>--></p>
+				<span class="close">✖</span>
+
+				<div class="inputs">
+					<div class="hidden">
+						<span class="delay-val"></span>
+						<input id="delayInput" value="" type="range" step="0.1" min="0" max="10">
+					</div>
+					
+					<label class="checkbox" for="delay-on">
+						<input name="delay" id="delay-on" type="checkbox">
+						Activer
+					</label>
+				</div>
+			</div>
+
+			<div id="iteration" class="thumb-min b-s r-4 active-parameter">
+				<h3>Iteration</h3>
+				<p>Répétition de l'animation</p>
+				<span class="close">✖</span>
+
+				<div class="inputs">
+					<label class="radio" for="iteration-on">
+						<input name="iteration" id="iteration-on" type="radio">
+						Répétition(s)
+					</label>
+					
+					<div class="hidden">
+						<input id="iteration-count" type="text">
+					</div>
+					
+					<label class="radio" for="infinite">
+						<input name="iteration" id="infinite" value="infinite" type="radio">
+						Infini
+					</label>
+				</div>
+			</div>
+
+			<div id="direction" class="thumb-min b-s r-4 active-parameter">
+				<h3>Direction</h3>
+				<p>Normal ou Alternée</p>
+				<span class="close">✖</span>
+
+				<div class="inputs">
+					<label class="radio" for="direction-normal">
+						<input name="direction" value="normal" id="direction-normal" type="radio">
+						Normal
+					</label>
+
+					<label class="radio" for="direction-alternate">
+						<input name="direction" value="alternate" id="direction-alternate" type="radio">
+						Alternée
+					</label>
+				</div>
+			</div>
+
+			<div id="fill" class="thumb-med g-last b-s r-4">
+				<h3>Fill mode</h3>
+				<p>Décoration à sa cible avant et après l'exécution.</p>
+				<span class="close">✖</span>
+
+				<div class="inputs">
+					<label class="radio" for="none">
+						<input name="fill" value="none" id="none" type="radio">
+						None
+					</label>
+					
+					<label class="radio" for="both">
+						<input name="fill" value="both" id="both" type="radio">
+						Both
+					</label>
+
+					<br>
+					
+					<label class="radio" for="backwards">
+						<input name="fill" value="backwards" id="backwards" type="radio">
+						Backwards
+					</label>
+					
+					<label class="radio" for="forwards">
+						<input name="fill" value="forwards" id="forwards" type="radio">
+						Forwards
+					</label>
+				</div>
+			</div>
+		</form>
+	</section>
+
+	<footer class="container ph-40">
+		Catapulté par <a class="link" href="https://github.com/JeremDsgn/css-quick-starter">CSS Quick Starter</a>.
+	</footer>
+
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="assets/js/script.js"></script>
+	<script src="assets/js/custom_input.js"></script>
+	<script src="assets/js/prism.js"></script>
+
+</body>
+</html>
